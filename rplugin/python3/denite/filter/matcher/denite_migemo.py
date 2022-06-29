@@ -39,7 +39,7 @@ class Filter(Base):
             return []
 
         # Note: "+" must be escaped
-        p = re.compile(pattern.replace("+", "\+"))
+        p = re.compile(pattern.replace("+", r"\+"))
         candidates = [x for x in candidates if p.search(x["word"])]
 
         return candidates

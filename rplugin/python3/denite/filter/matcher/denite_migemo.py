@@ -40,6 +40,6 @@ class Filter(Base):
 
         # Note: "+" must be escaped
         p = re.compile(pattern.replace("+", r"\+"))
-        candidates = [x for x in candidates if p.search(x["word"])]
+        candidates = [x for x in candidates if p.search(x["word"]) or context["input"] in x["word"]]
 
         return candidates

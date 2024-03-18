@@ -33,13 +33,14 @@ class Filter(Base):
                 self.vars["command"] + ["-w", context["input"],
                                         "-d", self.vars["dict_path"]],
             ).decode("utf-8").splitlines()[0]
+            # Note: "+" must be escaped
+            p = re.compile(pattern.replace("+", r"\+"))
 
         except Exception as ex:
             self.debug(ex)
-            return []
+            candidates = [x for x in candidates if context["input"] in x["word"]]
+            return candidates
 
-        # Note: "+" must be escaped
-        p = re.compile(pattern.replace("+", r"\+"))
         candidates = [x for x in candidates if p.search(x["word"]) or context["input"] in x["word"]]
 
         return candidates
